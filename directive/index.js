@@ -37,6 +37,8 @@ DirectiveGenerator.prototype.askFor = function askFor() {
 
 DirectiveGenerator.prototype.files = function files() {
 
+    var directiveName = _.camelize(_.classify(this.name)) + 'Directive';
+
     var configName = 'directiveSimpleTemplates';
     var defaultDir = 'templates/simple';
     if (this.needpartial) {
@@ -47,5 +49,5 @@ DirectiveGenerator.prototype.files = function files() {
     this.htmlPath = path.join(this.dir,this.name + '.html');
 
     cgUtils.processTemplates(this.name,this.dir,'directive',this,defaultDir,configName,this.module);
-
+    cgUtils.injectComponent(this.module, 'directive', directiveName, this);
 };

@@ -92,7 +92,7 @@ exports.injectRoute = function (moduleFile, uirouter, name, route, routeUrl, tha
     routeUrl = routeUrl.replace(/\\/g, '/');
 
     if (uirouter) {
-        var code = '$stateProvider.state(\'' + name + '\', {\n        url: \'' + route + '\',\n        templateUrl: \'' + routeUrl + '\'\n, controller: \'' + that.ctrlname + '\'\n    });';
+        var code = '$stateProvider.state(\'' + name + '\', {\n            url: \'' + route + '\',\n            templateUrl: \'' + routeUrl + '\',\n            controller: \'' + that.ctrlname + '\'\n        });';
         exports.addToFile(moduleFile, code, exports.STATE_MARKER);
     } else {
         exports.addToFile(moduleFile, '$routeProvider.when(\'' + route + '\',{templateUrl: \'' + routeUrl + '\'});', exports.ROUTE_MARKER);
@@ -103,12 +103,20 @@ exports.injectRoute = function (moduleFile, uirouter, name, route, routeUrl, tha
 };
 
 exports.injectComponent = function (module, type, name, that) {
-    // var fileName = './' + moduleFile.substr(0, moduleFile.indexOf('.js'));
-    exports.addToFile(module.file, exports.REQUIREJS_DEPS_MARKER);
+    var locationForRequire = that.dir + that.name;
+    locationForRequire = '.' + locationForRequire.substring(locationForRequire.indexOf(module.name) + module.name.length).replace(/\\/g, "/");
+    exports.addToFile(module.file, ',\'' + locationForRequire.toString() + '\'', exports.REQUIREJS_DEPS_MARKER);
     exports.addToFile(module.file, ',' + name, exports.REQUIREJS_INJECTS_MARKER);
-    exports.addToFile(module.file, 'angular.module(' + module.name + ').' + type + '("' + name + '", ' + name + ');', exports.COMPONENT_MARKER);
+    exports.addToFile(module.file, 'angular.module(\'' + module.name + '\').' + type + '(\'' + name + '\', ' + name + ');', exports.COMPONENT_MARKER);
 
-    that.log.writeln(chalk.green(' updating') + ' %s', path.basename(moduleFile));
+    that.log.writeln(chalk.green(' updating') + ' %s', path.basename(module.file));
+};
+
+exports.injectModule = function(module, that) {
+    var locationForRequire = './' + (that.dir + that.name).replace(/\\/g, "/");
+    exports.addToFile(module.file, ',\'' + locationForRequire.toString() + '\'', exports.REQUIREJS_DEPS_MARKER);
+
+    that.log.writeln(chalk.green(' updating') + ' %s', path.basename(module.file));
 };
 
 exports.getParentModule = function (dir) {

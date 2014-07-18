@@ -1,14 +1,15 @@
-angular.module('<%= appname %>').directive('<%= _.camelize(name) %>', function() {
-	return {
-		restrict: 'E',
-		replace: true,
-		scope: {
+define([], function () {
+    'use strict';
 
-		},
-		templateUrl: '<%= htmlPath %>',
-		link: function(scope, element, attrs, fn) {
+    return function () {
+        return {
+            restrict: 'E',
+            scope: {
 
-
-		}
-	};
+            },
+            templateUrl: '<%= (dir + name + ".html").replace(/\\/g, "/") %>',
+            link: function (scope, element, attrs, fn) {
+            }
+        };
+    };
 });

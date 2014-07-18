@@ -54,6 +54,7 @@ ModuleGenerator.prototype.files = function files() {
     this.log.writeln(chalk.green(' updating') + ' %s',path.basename(module.file));
 
     cgUtils.processTemplates(this.name,this.dir,'module',this,null,null,module);
+    cgUtils.injectModule(module, this);
 
     var modules = this.config.get('modules');
     if (!modules) {

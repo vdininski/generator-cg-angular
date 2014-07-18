@@ -1,30 +1,21 @@
-angular.module('<%= _.camelize(appname) %>', ['ui.bootstrap','ui.utils','<%= routerModuleName %>','ngAnimate']);
-<% if (!uirouter) { %>
-angular.module('<%= _.camelize(appname) %>').config(function($routeProvider) {
+define([
+    'angular',
+    'angular-cookies',
+    'angular-resource',
+    'angular-local-storage',
+    'angular-kendo',
+    'ui.router',
+    'jquery',
+    'kendo.core'
 
-    /* Add New Routes Above */
-    $routeProvider.otherwise({redirectTo:'/home'});
+    /* Add RequireJs Modules Above*/
+], function (angular) {
+    'use strict';
 
-});
-<% } %><% if (uirouter) { %>
-angular.module('<%= _.camelize(appname) %>').config(function($stateProvider, $urlRouterProvider) {
+    angular.module('Portal', ['ui.router', 'ngResource', 'ngCookies', 'kendo.directives', 'LocalStorageModule']);
 
-    /* Add New States Above */
-    $urlRouterProvider.otherwise('/home');
+    angular.module('Portal').constant('apiServerUrl', 'http://localhost:4080/bs-api');
+    angular.module('Portal').constant('httpServerUrl', 'http://localhost:4080/bs');
 
-});
-<% } %>
-angular.module('<%= _.camelize(appname) %>').run(function($rootScope) {
-
-    $rootScope.safeApply = function(fn) {
-        var phase = $rootScope.$$phase;
-        if (phase === '$apply' || phase === '$digest') {
-            if (fn && (typeof(fn) === 'function')) {
-                fn();
-            }
-        } else {
-            this.$apply(fn);
-        }
-    };
-
+    return angular.module('Portal');
 });

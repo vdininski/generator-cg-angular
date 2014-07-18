@@ -1,6 +1,11 @@
-angular.module('<%= appname %>').factory('<%= _.camelize(name) %>',function() {
+define([], function () {
+    return [ //dependencies as string
+        function () {
+            'use strict';
 
-	var <%= _.camelize(name) %> = {};
+            var <%= name %> = {};
 
-	return <%= _.camelize(name) %>;
-});
+            return <%= name %>;
+        }];
+    }
+);

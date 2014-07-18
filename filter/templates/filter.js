@@ -1,5 +1,9 @@
-angular.module('<%= appname %>').filter('<%= _.camelize(name) %>', function() {
-	return function(input,arg) {
-		return 'output';
-	};
+define([], function () {
+    'use strict';
+
+    return function () {
+        return function (input, arg) {
+            return 'output';
+        };
+    };
 });
