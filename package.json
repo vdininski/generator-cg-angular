@@ -1,5 +1,5 @@
 {
-  "name": "generator-cg-angular",
+  "name": "generator-cg-angular-require",
   "version": "3.1.1",
   "description": "Yeoman Generator for Enterprise Angular projects.",
   "keywords": [
@@ -16,7 +16,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cgross/generator-cg-angular.git"
+    "url": "git://github.com/vdininski/generator-cg-angular.git"
   },
   "scripts": {
     "test": "mocha"

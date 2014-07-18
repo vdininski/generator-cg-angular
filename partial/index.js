@@ -31,7 +31,7 @@ PartialGenerator.prototype.askFor = function askFor() {
 
     this.prompt(prompts, function (props) {
         this.route = props.route;
-        cgUtils.askForModuleAndDir('partial',this,true,cb);
+        cgUtils.askForModuleAndDir('partial', this, true, cb);
     }.bind(this));
 };
 
@@ -39,11 +39,12 @@ PartialGenerator.prototype.files = function files() {
 
     this.ctrlname = _.camelize(_.classify(this.name)) + 'Ctrl';
 
-    cgUtils.processTemplates(this.name,this.dir,'partial',this,null,null,this.module);
+    cgUtils.processTemplates(this.name, this.dir, 'partial', this, null, null, this.module);
 
-    if (this.route && this.route.length > 0){
+    if (this.route && this.route.length > 0) {
         var partialUrl = this.dir + this.name + '.html';
-        cgUtils.injectRoute(this.module.file,this.config.get('uirouter'),this.name,this.route,partialUrl,this);
+        cgUtils.injectRoute(this.module.file, this.config.get('uirouter'), this.name, this.route, partialUrl, this);
+        cgUtils.injectComponent(this.module, 'controller', this.ctrlname, this);
     }
 
 };
