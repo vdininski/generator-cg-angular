@@ -1,7 +1,5 @@
 define([
-    'angular',
-
-    '../common/common'
+    'angular'
     /* Add RequireJs Dependencies Above*/
 ], function (angular
 
