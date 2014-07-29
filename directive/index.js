@@ -37,7 +37,7 @@ DirectiveGenerator.prototype.askFor = function askFor() {
 
 DirectiveGenerator.prototype.files = function files() {
 
-    var directiveName = _.camelize(_.classify(this.name)) + 'Directive';
+    var directiveName = _.camelize(this.name);
 
     var configName = 'directiveSimpleTemplates';
     var defaultDir = 'templates/simple';
