@@ -25,7 +25,7 @@ FilterGenerator.prototype.askFor = function askFor() {
 };
 
 FilterGenerator.prototype.files = function files() {
-    var filterName = _.camelize(_.classify(this.name));
+    var filterName = _.camelize(this.name);
     cgUtils.processTemplates(this.name, this.dir, 'filter', this, null, null, this.module);
     cgUtils.injectComponent(this.module, 'filter', filterName, this);
 };
