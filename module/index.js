@@ -29,7 +29,7 @@ ModuleGenerator.prototype.askFor = function askFor() {
         {
             name:'dir',
             message:'Where would you like to create the module (must specify a subdirectory)?',
-            default: defaultDir,
+            default: 'components\\' + defaultDir,
             validate: function(value) {
                 value = _.str.trim(value);
                 if (_.isEmpty(value) || value[0] === '/' || value[0] === '\\') {
