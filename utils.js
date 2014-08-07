@@ -103,8 +103,9 @@ exports.injectRoute = function (moduleFile, uirouter, name, route, routeUrl, tha
 };
 
 exports.injectComponent = function (module, type, name, that) {
-    var locationForRequire = that.dir + that.name;
-    locationForRequire = '.' + locationForRequire.substring(locationForRequire.indexOf(module.name) + module.name.length).replace(/\\/g, "/");
+     var locationForRequire = that.dir + that.name;
+    var moduleFile = module.file.replace(/.*\\|\..*$/g, '');
+    locationForRequire = '.' + locationForRequire.substring(locationForRequire.indexOf(moduleFile) + moduleFile.length).replace(/\\/g, "/");
     exports.addToFile(module.file, ',\'' + locationForRequire.toString() + '\'', exports.REQUIREJS_DEPS_MARKER);
     exports.addToFile(module.file, ',' + name, exports.REQUIREJS_INJECTS_MARKER);
     exports.addToFile(module.file, 'angular.module(\'' + module.name + '\').' + type + '(\'' + name + '\', ' + name + ');', exports.COMPONENT_MARKER);
