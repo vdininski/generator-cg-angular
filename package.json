@@ -1,6 +1,6 @@
 {
     "name": "generator-cg-angular-require",
-    "version": "3.1.6",
+    "version": "3.1.7",
     "description": "Yeoman Generator for Enterprise Angular projects with RequireJS.",
     "keywords": [
         "yeoman-generator",

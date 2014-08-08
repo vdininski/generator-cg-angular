@@ -8,7 +8,7 @@ define([], function () {
 
             },
             templateUrl: '<%= (dir + name + ".html").replace(/\\/g, "/") %>',
-            link: function (scope, element, attrs, fn) {
+            link: function (scope, element, attrs, req, transclude) {
             }
         };
     };

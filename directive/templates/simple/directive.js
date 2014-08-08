@@ -3,7 +3,7 @@ define([], function () {
 
     return {
         restrict: 'A',
-        link: function(scope, element, attrs, fn) {
+        link: function(scope, element, attrs, req, transclude) {
 
 
         }
