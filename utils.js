@@ -22,6 +22,10 @@ exports.addToFile = function (filename, lineToAdd, beforeMarker) {
         var fileSrc = fs.readFileSync(fullPath, 'utf8');
 
         var indexOf = fileSrc.indexOf(beforeMarker);
+        if(indexOf === -1) {
+            return; // the marker is not found in the file - so don't add anything.
+        }
+
         var lineStart = fileSrc.substring(0, indexOf).lastIndexOf('\n') + 1;
         var indent = fileSrc.substring(lineStart, indexOf);
         fileSrc = fileSrc.substring(0, indexOf) + lineToAdd + "\n" + indent + fileSrc.substring(indexOf);
@@ -103,11 +107,18 @@ exports.injectRoute = function (moduleFile, uirouter, name, route, routeUrl, tha
 };
 
 exports.injectComponent = function (module, type, name, that) {
-     var locationForRequire = that.dir + that.name;
+    var locationForRequire = that.dir + that.name;
     var moduleFile = module.file.replace(/.*\\|\..*$/g, '');
     locationForRequire = '.' + locationForRequire.substring(locationForRequire.indexOf(moduleFile) + moduleFile.length).replace(/\\/g, "/");
-    exports.addToFile(module.file, ',\'' + locationForRequire.toString() + '\'', exports.REQUIREJS_DEPS_MARKER);
-    exports.addToFile(module.file, ',' + name, exports.REQUIREJS_INJECTS_MARKER);
+
+
+    exports.addToFile(module.file, ',\'' + locationForRequire.toString() + '\'', exports.REQUIREJS_DEPS_MARKER); // this is for some weird cases with this marker
+    //exports.addToFile(module.file, ',' + name, exports.REQUIREJS_INJECTS_MARKER);
+
+    // add require statements as "var x = require('x');"
+    var requireStatement = 'var ' + name + ' = require(\'' + locationForRequire.toString() + '\');';
+    exports.addToFile(module.file, requireStatement, exports.REQUIREJS_INJECTS_MARKER);
+
     exports.addToFile(module.file, 'angular.module(\'' + module.name + '\').' + type + '(\'' + name + '\', ' + name + ');', exports.COMPONENT_MARKER);
 
     that.log.writeln(chalk.green(' updating') + ' %s', path.basename(module.file));
